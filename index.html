@@ -1,0 +1,1718 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Discover Sri Lanka with curated destination guides, multi-photo galleries, interactive trip planner, maps and visitor tips for 51 iconic places across the island.">
+  <meta name="theme-color" content="#042f2a">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Discover Sri Lanka | Luxury Editorial Travel Guide">
+  <meta property="og:description" content="Explore 51 handpicked destinations across Sri Lanka with curated guides, photo galleries, trip wishlist and visitor tips.">
+  <title>Discover Sri Lanka | Explore the Wonder Island</title>
+
+  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            emeraldDeep: '#042f2a',
+            emeraldMid: '#074e45',
+            emeraldLight: '#0b8a65',
+            sandIvory: '#fcfaf5',
+            sandWarm: '#f5efe2',
+            antiqueGold: '#d4a359',
+            antiqueGoldLight: '#e8c488',
+            inkDark: '#122623',
+            inkMuted: '#586e6a'
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif']
+          },
+          boxShadow: {
+            'luxury': '0 20px 50px -12px rgba(4, 47, 42, 0.12)',
+            'luxury-hover': '0 28px 60px -12px rgba(4, 47, 42, 0.2)',
+            'glass': '0 8px 32px 0 rgba(4, 47, 42, 0.08)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Editorial & Glassmorphism Styles */
+    body {
+      background-color: #fcfaf5;
+      color: #122623;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, .font-editorial {
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+
+    /* Smooth Scroll Progress Indicator */
+    #scrollProgress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #d4a359, #f3d199, #0b8a65);
+      z-index: 100;
+      width: 0%;
+      transition: width 0.1s ease-out;
+    }
+
+    /* Hero Subtle Zoom Animation */
+    @keyframes subtleKenBurns {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.08); }
+    }
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+    }
+    .hero-slide.active {
+      opacity: 0.9;
+    }
+    .hero-slide.active img {
+      animation: subtleKenBurns 14s ease-out forwards;
+    }
+
+    /* Glassmorphism Utilities */
+    .glass-nav {
+      background: rgba(252, 250, 245, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(4, 47, 42, 0.08);
+    }
+
+    .glass-hero-card {
+      background: rgba(4, 47, 42, 0.45);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+    }
+
+    /* Image Smooth Fade-In */
+    .photo-fade {
+      opacity: 0;
+      transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .photo-fade.loaded {
+      opacity: 1;
+    }
+
+    /* Custom Scrollbar for Modals & Drawers */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f5efe2;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #b9c7c3;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #042f2a;
+    }
+
+    /* Dialog Backdrop Animation */
+    dialog::backdrop {
+      background: rgba(4, 30, 27, 0.72);
+      backdrop-filter: blur(6px);
+      animation: fadeInBackdrop 0.25s ease-out;
+    }
+    dialog[open] {
+      animation: slideUpModal 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes fadeInBackdrop {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideUpModal {
+      from { opacity: 0; transform: translateY(18px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Hide scrollbar for horizontal filter strip on mobile */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-bg-animate { animation: none !important; }
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+    }
+
+
+    /* 2026 redesign: modern editorial travel platform */
+    :root { --ds-ink:#10231f; --ds-green:#073f36; --ds-lime:#c8dfb5; --ds-coral:#e58b70; --ds-paper:#f7f6f0; }
+    body { background:var(--ds-paper); color:var(--ds-ink); }
+    .glass-nav { background:rgba(247,246,240,.91); border-bottom:1px solid rgba(16,35,31,.10); box-shadow:0 8px 30px rgba(10,40,34,.05); }
+    header .max-w-7xl { min-height:76px; }
+    header a[href="#"] span.w-10 { background:var(--ds-green); color:var(--ds-lime); }
+    .hero-slide.active { opacity:1; }
+    main > section[aria-label="Featured Sri Lankan Landscapes"] { min-height: min(820px, 88vh); background:#082f29; }
+    main > section[aria-label="Featured Sri Lankan Landscapes"] h1 { letter-spacing:-.045em; text-wrap:balance; }
+    .glass-hero-card { background:rgba(8,32,28,.58); border:1px solid rgba(255,255,255,.28); box-shadow:0 25px 80px rgba(0,0,0,.20); }
+    #places { background:linear-gradient(180deg,#f7f6f0 0%,#fff 45%,#f7f6f0 100%); }
+    #cards article { border-radius:26px!important; overflow:hidden; border:1px solid rgba(7,63,54,.10); box-shadow:0 12px 36px rgba(7,45,38,.07); transition:transform .28s ease,box-shadow .28s ease; }
+    #cards article:hover { transform:translateY(-6px); box-shadow:0 22px 48px rgba(7,45,38,.14); }
+    #cards article img { transition:transform .7s ease; }
+    #cards article:hover img { transform:scale(1.045); }
+    #cards article button[data-open] { letter-spacing:.02em; }
+    #stay { background:#eef0e8; }
+    #tips { background:#fbfaf6; }
+    #about { background:#f0f2eb; }
+    button,a,select,input { -webkit-tap-highlight-color:transparent; }
+    button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible { outline:3px solid #e58b70!important; outline-offset:3px; }
+    .upgrade-card { background:#fff; border:1px solid rgba(7,63,54,.12); border-radius:26px; box-shadow:0 14px 40px rgba(7,45,38,.06); }
+    .upgrade-kicker { color:#287866; font-size:11px; font-weight:800; letter-spacing:.22em; text-transform:uppercase; }
+    .upgrade-btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:999px; padding:12px 19px; font-size:13px; font-weight:800; transition:.2s; }
+    .upgrade-btn-primary { background:#073f36; color:white; }
+    .upgrade-btn-primary:hover { background:#0d5b4c; transform:translateY(-1px); }
+    .upgrade-btn-soft { background:#edf1e8; color:#073f36; }
+    .upgrade-btn-soft:hover { background:#dce8d4; }
+    .upgrade-input { width:100%; border:1px solid rgba(7,63,54,.17); background:#fbfaf6; border-radius:13px; padding:12px 14px; color:#10231f; }
+    #budgetResult { background:#073f36; color:white; border-radius:20px; padding:18px; }
+    #islandMapFrame { width:100%; height:340px; border:0; border-radius:22px; }
+    @media(max-width:640px){ main > section[aria-label="Featured Sri Lankan Landscapes"] { min-height:760px; } #islandMapFrame{height:260px;} }
+
+  </style>
+</head>
+<body class="antialiased selection:bg-antiqueGold/30 selection:text-emeraldDeep">
+
+  <!-- Scroll Progress Bar -->
+  <div id="scrollProgress" role="progressbar" aria-hidden="true"></div>
+
+  <!-- Accessibility Skip Link -->
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-emeraldDeep focus:text-white focus:rounded-xl focus:font-semibold">
+    Skip to content
+  </a>
+
+  <!-- Floating Glassmorphic Header -->
+  <header class="sticky top-0 z-40 glass-nav transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-2.5 group focus:outline-none">
+        <span class="w-10 h-10 rounded-full bg-emeraldDeep text-antiqueGold flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"/>
+          </svg>
+        </span>
+        <div>
+          <span class="font-editorial text-xl sm:text-2xl font-bold tracking-tight text-emeraldDeep block leading-none">
+            Discover <span class="italic font-semibold text-emeraldLight">Sri Lanka</span>
+          </span>
+          <span class="text-[10px] uppercase tracking-[0.22em] text-inkMuted font-semibold hidden sm:block mt-0.5">
+            The Wonder Island Journal
+          </span>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="hidden md:flex items-center gap-8" aria-label="Primary Navigation">
+        <a href="#places" class="text-sm font-semibold text-inkDark hover:text-emeraldLight transition-colors">Destinations</a>
+        <a href="#trip-tools" class="text-sm font-semibold text-inkDark hover:text-emeraldLight transition-colors">Plan a Trip</a>
+        <a href="#stay" class="text-sm font-semibold text-inkDark hover:text-emeraldLight transition-colors">Stays & Dining</a>
+        <a href="#tips" class="text-sm font-semibold text-inkDark hover:text-emeraldLight transition-colors">Travel Essentials</a>
+        <a href="#about" class="text-sm font-semibold text-inkDark hover:text-emeraldLight transition-colors">Heritage</a>
+      </nav>
+
+      <!-- Action Buttons: Surprise Me + Trip Wishlist Drawer -->
+      <div class="flex items-center gap-2.5 sm:gap-3">
+        <button id="headerSurpriseBtn" type="button" title="Pick a random destination" class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-bold uppercase tracking-wider text-emeraldDeep bg-sandWarm hover:bg-antiqueGold/25 border border-emeraldDeep/10 transition-all cursor-pointer">
+          <span>✨</span> Surprise Me
+        </button>
+
+        <button id="openWishlistBtn" type="button" aria-label="Open Trip Planner and Saved Wishlist" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-emeraldDeep text-sandIvory hover:bg-emeraldMid shadow-sm hover:shadow transition-all cursor-pointer">
+          <span class="text-rose-400 text-sm leading-none">❤️</span>
+          <span class="text-xs sm:text-sm font-semibold">Trip Planner</span>
+          <span id="wishlistBadge" class="inline-flex items-center justify-center min-w-[22px] h-[22px] px-1.5 rounded-full bg-antiqueGold text-emeraldDeep text-xs font-extrabold">
+            0
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- Full-Bleed Immersive Editorial Hero with Auto-Changing Sri Lankan Landscapes -->
+    <section class="relative min-h-[86vh] flex items-center justify-center overflow-hidden bg-emeraldDeep text-white" aria-label="Featured Sri Lankan Landscapes">
+      <!-- Dynamic Slideshow Container -->
+      <div id="heroSlideshow" class="absolute inset-0 z-0 overflow-hidden"></div>
+
+      <!-- Multi-layered Luxury Gradient Overlay for Crisp Text Readability -->
+      <div class="absolute inset-0 z-[1] bg-gradient-to-b from-emeraldDeep/80 via-emeraldDeep/50 to-emeraldDeep/95 pointer-events-none"></div>
+      <div class="absolute inset-0 z-[1] bg-radial from-transparent to-emeraldDeep/45 pointer-events-none"></div>
+
+      <!-- Hero Content -->
+      <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-24 text-center">
+        <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-antiqueGoldLight text-xs font-bold uppercase tracking-[0.22em] mb-7">
+          <span>🇱🇰</span>
+          <span>Curated Island Monograph · 51 Destinations</span>
+        </div>
+
+        <h1 class="font-editorial text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.08] text-sandIvory mb-6 drop-shadow-sm">
+          Discover the Timeless <br class="hidden sm:inline">
+          <span class="italic font-medium text-antiqueGoldLight">Wonder of Sri Lanka</span>
+        </h1>
+
+        <p class="max-w-2xl mx-auto text-base sm:text-lg lg:text-xl text-sandIvory/90 font-normal leading-relaxed mb-10">
+          From mist-draped tea highlands and sacred ancient citadels to golden crescent bays and untamed leopard sanctuaries—curate your bespoke island itinerary.
+        </p>
+
+        <!-- Floating Glass Quick Search Bar inside Hero -->
+        <div class="max-w-2xl mx-auto glass-hero-card p-2 rounded-2xl sm:rounded-full shadow-2xl mb-8">
+          <form id="heroSearchForm" class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+            <div class="relative flex-1 flex items-center">
+              <svg class="w-5 h-5 text-antiqueGoldLight ml-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+              </svg>
+              <input
+                id="heroSearchInput"
+                type="search"
+                placeholder="Where to next? Try “Sigiriya”, “Ella”, “Beach”..."
+                aria-label="Quick search destinations"
+                class="w-full bg-transparent border-0 text-white placeholder-white/70 px-3.5 py-3 text-sm sm:text-base focus:outline-none"
+              >
+            </div>
+            <button type="submit" class="px-7 py-3.5 rounded-xl sm:rounded-full bg-antiqueGold hover:bg-antiqueGoldLight text-emeraldDeep font-extrabold text-sm tracking-wide transition-all cursor-pointer shrink-0 shadow-lg">
+              Explore 51 Places
+            </button>
+          </form>
+        </div>
+
+        <!-- Quick Jump Links -->
+        <div class="flex flex-wrap items-center justify-center gap-3 text-xs sm:text-sm text-sandIvory/80 mb-8">
+          <span class="uppercase tracking-widest text-[11px] text-antiqueGoldLight font-bold">Popular:</span>
+          <button type="button" data-quick-search="Sigiriya" class="underline decoration-antiqueGold/60 hover:text-white cursor-pointer">Sigiriya</button>
+          <span>•</span>
+          <button type="button" data-quick-search="Ella" class="underline decoration-antiqueGold/60 hover:text-white cursor-pointer">Ella</button>
+          <span>•</span>
+          <button type="button" data-quick-search="Mirissa" class="underline decoration-antiqueGold/60 hover:text-white cursor-pointer">Mirissa</button>
+          <span>•</span>
+          <button type="button" data-quick-search="Yala" class="underline decoration-antiqueGold/60 hover:text-white cursor-pointer">Yala Safari</button>
+        </div>
+
+        <!-- Subtle Landmark Caption Badge & Interactive Slide Dots -->
+        <div class="inline-flex flex-col sm:flex-row items-center gap-3 px-4 py-2 rounded-full bg-emeraldDeep/65 backdrop-blur-md border border-white/15 shadow-lg">
+          <div class="flex items-center gap-2 text-xs text-sandIvory/90">
+            <span class="w-2 h-2 rounded-full bg-antiqueGold animate-pulse"></span>
+            <span id="heroSlideCaption" class="font-semibold tracking-wide">Sigiriya Rock Fortress · Cultural Triangle</span>
+          </div>
+          <span class="hidden sm:inline text-white/25">|</span>
+          <div id="heroSlideDots" class="flex items-center gap-2" role="tablist" aria-label="Choose background landscape"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Editorial Statistics & Highlights Strip -->
+    <div class="relative z-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10">
+      <div class="bg-white rounded-3xl shadow-luxury border border-emeraldDeep/10 p-6 sm:p-8 grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-sandWarm text-emeraldDeep flex items-center justify-center text-xl shrink-0">🏛️</div>
+          <div>
+            <div class="font-editorial text-2xl sm:text-3xl font-bold text-emeraldDeep">51</div>
+            <div class="text-xs sm:text-sm text-inkMuted font-medium">Curated Destinations</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-sandWarm text-emeraldDeep flex items-center justify-center text-xl shrink-0">🧭</div>
+          <div>
+            <div class="font-editorial text-2xl sm:text-3xl font-bold text-emeraldDeep">5 Themes</div>
+            <div class="text-xs sm:text-sm text-inkMuted font-medium">Culture to Wildlife</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-sandWarm text-emeraldDeep flex items-center justify-center text-xl shrink-0">📸</div>
+          <div>
+            <div class="font-editorial text-2xl sm:text-3xl font-bold text-emeraldDeep">Galleries</div>
+            <div class="text-xs sm:text-sm text-inkMuted font-medium">Real Island Photography</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-sandWarm text-emeraldDeep flex items-center justify-center text-xl shrink-0">🗺️</div>
+          <div>
+            <div class="font-editorial text-2xl sm:text-3xl font-bold text-emeraldDeep">Planner</div>
+            <div class="text-xs sm:text-sm text-inkMuted font-medium">Save & Map Your Route</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Destinations Directory Section -->
+    <section id="places" class="py-20 sm:py-24 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <!-- Editorial Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-12">
+          <span class="text-xs font-extrabold uppercase tracking-[0.25em] text-emeraldLight block mb-3">
+            The Island Compendium
+          </span>
+          <h2 class="font-editorial text-3xl sm:text-5xl font-bold text-emeraldDeep tracking-tight mb-4">
+            51 Unforgettable Places to Explore
+          </h2>
+          <p class="text-inkMuted text-base sm:text-lg leading-relaxed">
+            Filter by travel mood, search by name, save your favorites to your personal itinerary, or let fate choose your next stop.
+          </p>
+        </div>
+
+        <!-- Search, Sort & Surprise Bar -->
+        <div class="bg-white p-3 sm:p-4 rounded-3xl shadow-glass border border-emeraldDeep/10 mb-8 flex flex-col lg:flex-row items-stretch lg:items-center gap-3">
+          <!-- Search Input -->
+          <div class="relative flex-1 flex items-center">
+            <svg class="w-5 h-5 text-inkMuted ml-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+            </svg>
+            <input
+              id="search"
+              type="search"
+              placeholder="Search destinations, regions, or keywords (e.g., waterfall, temple, surf)..."
+              aria-label="Search 51 destinations"
+              class="w-full bg-transparent border-0 px-3 py-2.5 text-sm sm:text-base text-inkDark placeholder-inkMuted/70 focus:outline-none"
+            >
+            <button id="clearSearch" type="button" class="hidden mr-2 px-3 py-1 rounded-full text-xs font-bold bg-sandWarm text-inkMuted hover:text-emeraldDeep transition-colors cursor-pointer">
+              Clear
+            </button>
+          </div>
+
+          <!-- Controls: Sort & Surprise Me -->
+          <div class="flex flex-wrap sm:flex-nowrap items-center gap-2.5 pt-2 lg:pt-0 border-t lg:border-t-0 border-emeraldDeep/10">
+            <select id="sortSelect" aria-label="Sort destinations" class="flex-1 sm:flex-initial px-4 py-2.5 rounded-2xl bg-sandIvory border border-emeraldDeep/10 text-xs sm:text-sm font-semibold text-emeraldDeep focus:outline-none focus:ring-2 focus:ring-antiqueGold cursor-pointer">
+              <option value="featured">Sort: Curated Order</option>
+              <option value="az">Sort: A – Z</option>
+              <option value="za">Sort: Z – A</option>
+            </select>
+
+            <button id="surpriseBtn" type="button" class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-antiqueGold hover:bg-antiqueGoldLight text-emeraldDeep font-bold text-xs sm:text-sm transition-all cursor-pointer shadow-sm">
+              <span>✨</span>
+              <span>Surprise Me</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Category Filter Pills with Dynamic Counts -->
+        <div class="flex items-center justify-start md:justify-center gap-2.5 overflow-x-auto no-scrollbar pb-3 mb-6" role="tablist" aria-label="Destination categories">
+          <button type="button" class="filter active shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer bg-emeraldDeep text-sandIvory shadow-md" data-cat="All">
+            <span>🌏 All Places</span>
+            <span class="cat-count px-2 py-0.5 rounded-full text-[11px] bg-white/20 text-white" data-count-for="All">51</span>
+          </button>
+          <button type="button" class="filter shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer bg-white text-inkDark border border-emeraldDeep/10 hover:border-emeraldDeep/30" data-cat="Culture">
+            <span>🏛️ Culture</span>
+            <span class="cat-count px-2 py-0.5 rounded-full text-[11px] bg-sandWarm text-emeraldDeep" data-count-for="Culture">0</span>
+          </button>
+          <button type="button" class="filter shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer bg-white text-inkDark border border-emeraldDeep/10 hover:border-emeraldDeep/30" data-cat="Nature">
+            <span>🌿 Nature</span>
+            <span class="cat-count px-2 py-0.5 rounded-full text-[11px] bg-sandWarm text-emeraldDeep" data-count-for="Nature">0</span>
+          </button>
+          <button type="button" class="filter shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer bg-white text-inkDark border border-emeraldDeep/10 hover:border-emeraldDeep/30" data-cat="Beach">
+            <span>🏖️ Beaches</span>
+            <span class="cat-count px-2 py-0.5 rounded-full text-[11px] bg-sandWarm text-emeraldDeep" data-count-for="Beach">0</span>
+          </button>
+          <button type="button" class="filter shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer bg-white text-inkDark border border-emeraldDeep/10 hover:border-emeraldDeep/30" data-cat="Adventure">
+            <span>⛰️ Adventure</span>
+            <span class="cat-count px-2 py-0.5 rounded-full text-[11px] bg-sandWarm text-emeraldDeep" data-count-for="Adventure">0</span>
+          </button>
+          <button type="button" class="filter shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer bg-white text-inkDark border border-emeraldDeep/10 hover:border-emeraldDeep/30" data-cat="Wildlife">
+            <span>🐘 Wildlife</span>
+            <span class="cat-count px-2 py-0.5 rounded-full text-[11px] bg-sandWarm text-emeraldDeep" data-count-for="Wildlife">0</span>
+          </button>
+          <button type="button" class="filter shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer bg-white text-inkDark border border-rose-200 hover:border-rose-400" data-cat="Saved">
+            <span>❤️ Saved</span>
+            <span id="savedFilterCount" class="cat-count px-2 py-0.5 rounded-full text-[11px] bg-rose-100 text-rose-700">0</span>
+          </button>
+        </div>
+
+        <!-- Results Status Counter -->
+        <div class="flex items-center justify-between text-xs sm:text-sm text-inkMuted mb-6 px-1">
+          <p id="count" class="font-medium">Showing 51 destinations</p>
+          <button id="resetAllFiltersBtn" type="button" class="hidden text-emeraldLight font-bold hover:underline cursor-pointer">
+            Reset filters
+          </button>
+        </div>
+
+        <!-- Destination Cards Grid -->
+        <div id="cards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7"></div>
+      </div>
+    </section>
+
+
+    <!-- New trip tools: route map, cost estimator and booking discovery -->
+    <section id="trip-tools" class="py-20 px-4 sm:px-6 lg:px-8 bg-white border-y border-emeraldDeep/10">
+      <div class="max-w-7xl mx-auto">
+        <div class="max-w-3xl mb-10">
+          <span class="upgrade-kicker">Your island, your way</span>
+          <h2 class="font-editorial text-3xl sm:text-5xl font-bold text-emeraldDeep mt-3 mb-4">Build a journey worth remembering.</h2>
+          <p class="text-inkMuted leading-relaxed">Turn saved places into a route, estimate a travel budget and discover trusted booking platforms. Booking links open external services; reservations and prices are confirmed with those providers.</p>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+          <div class="upgrade-card p-6 sm:p-7 lg:col-span-3">
+            <div class="flex items-center justify-between gap-3 mb-5"><div><span class="upgrade-kicker">Explore the island</span><h3 class="font-editorial text-2xl font-bold text-emeraldDeep mt-1">Sri Lanka map</h3></div><span class="text-2xl">🗺️</span></div>
+            <iframe id="islandMapFrame" title="Map of Sri Lanka tourist attractions" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Sri%20Lanka%20tourist%20attractions&output=embed"></iframe>
+            <div class="flex flex-wrap gap-3 mt-4"><a class="upgrade-btn upgrade-btn-primary" href="https://www.google.com/maps/search/tourist+attractions+in+Sri+Lanka/" target="_blank" rel="noopener noreferrer">Open full map ↗</a><button id="savedRouteMapBtn" type="button" class="upgrade-btn upgrade-btn-soft">Map my saved places</button></div>
+            <p class="text-xs text-inkMuted mt-3">Map data and directions are provided by Google Maps. Check routes and local conditions before travelling.</p>
+          </div>
+          <div class="upgrade-card p-6 sm:p-7 lg:col-span-2">
+            <span class="upgrade-kicker">Plan your spend</span><h3 class="font-editorial text-2xl font-bold text-emeraldDeep mt-1 mb-2">Trip budget estimator</h3>
+            <p class="text-xs text-inkMuted mb-5">Enter your own daily budget in LKR. This is a simple planning estimate, not a live quote.</p>
+            <div class="space-y-3">
+              <label class="block text-xs font-bold text-emeraldDeep">Number of travellers<input id="budgetPeople" class="upgrade-input mt-1" type="number" min="1" max="30" value="2"></label>
+              <label class="block text-xs font-bold text-emeraldDeep">Number of days<input id="budgetDays" class="upgrade-input mt-1" type="number" min="1" max="60" value="5"></label>
+              <label class="block text-xs font-bold text-emeraldDeep">Daily budget per person (LKR)<input id="budgetDaily" class="upgrade-input mt-1" type="number" min="0" step="500" value="10000"></label>
+              <label class="block text-xs font-bold text-emeraldDeep">Extra costs (total LKR)<input id="budgetExtra" class="upgrade-input mt-1" type="number" min="0" step="500" value="15000"></label>
+              <button id="calculateBudgetBtn" type="button" class="upgrade-btn upgrade-btn-primary w-full">Calculate my estimate</button>
+              <div id="budgetResult" aria-live="polite"><div class="text-xs text-white/70">Estimated total</div><div id="budgetTotal" class="text-3xl font-extrabold mt-1">LKR 115,000</div><div id="budgetBreakdown" class="text-xs text-white/75 mt-2">2 travellers · 5 days · excludes any costs you have not entered</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-7 grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div class="upgrade-card p-6"><div class="text-2xl mb-3">🏨</div><h3 class="font-editorial text-xl font-bold text-emeraldDeep mb-2">Find accommodation</h3><p class="text-sm text-inkMuted mb-4">Compare stays and check current availability directly with booking providers.</p><a class="upgrade-btn upgrade-btn-soft" href="https://www.booking.com/country/lk.html" target="_blank" rel="noopener noreferrer">Explore stays ↗</a></div>
+          <div class="upgrade-card p-6"><div class="text-2xl mb-3">🚐</div><h3 class="font-editorial text-xl font-bold text-emeraldDeep mb-2">Tours & experiences</h3><p class="text-sm text-inkMuted mb-4">Browse guided experiences, activities and local tours.</p><a class="upgrade-btn upgrade-btn-soft" href="https://www.getyourguide.com/sri-lanka-l169048/" target="_blank" rel="noopener noreferrer">Explore tours ↗</a></div>
+          <div class="upgrade-card p-6"><div class="text-2xl mb-3">✈️</div><h3 class="font-editorial text-xl font-bold text-emeraldDeep mb-2">Plan transport</h3><p class="text-sm text-inkMuted mb-4">Check flight options and plan connections before you travel.</p><a class="upgrade-btn upgrade-btn-soft" href="https://www.google.com/travel/flights" target="_blank" rel="noopener noreferrer">Explore flights ↗</a></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bento Grid: Luxury Stays & Culinary Experiences -->
+    <section id="stay" class="py-20 px-4 sm:px-6 lg:px-8 bg-sandWarm/70 border-y border-emeraldDeep/10">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <div>
+            <span class="text-xs font-extrabold uppercase tracking-[0.25em] text-emeraldLight block mb-2.5">
+              Hospitality & Gastronomy
+            </span>
+            <h2 class="font-editorial text-3xl sm:text-5xl font-bold text-emeraldDeep tracking-tight">
+              Curated Stays & Island Flavors
+            </h2>
+          </div>
+          <p class="text-inkMuted max-w-md text-sm sm:text-base">
+            From colonial tea bungalows and boutique coastal villas to fragrant spice-market kitchens across the island.
+          </p>
+        </div>
+
+        <!-- Bento Grid Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Featured Boutique Hotels Bento Card -->
+          <div class="lg:col-span-7 bg-emeraldDeep text-sandIvory rounded-3xl p-8 sm:p-10 relative overflow-hidden shadow-luxury flex flex-col justify-between min-h-[320px]">
+            <div class="relative z-10 max-w-lg">
+              <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-antiqueGoldLight text-xs font-bold uppercase tracking-wider mb-5">
+                🏨 Boutique & Luxury Stays
+              </span>
+              <h3 class="font-editorial text-2xl sm:text-4xl font-bold mb-4 leading-snug">
+                Sanctuaries Amidst Mist, Jungle & Sea
+              </h3>
+              <p class="text-sandIvory/80 text-sm sm:text-base leading-relaxed mb-8">
+                Discover heritage fort mansions in Galle, eco-lodges bordering Yala, and cliffside retreats overlooking Ella Gap. Compare verified guest reviews and real-time availability.
+              </p>
+            </div>
+            <div class="relative z-10 flex flex-wrap gap-3">
+              <a href="https://www.google.com/maps/search/boutique+hotels+in+Sri+Lanka/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-antiqueGold hover:bg-antiqueGoldLight text-emeraldDeep font-bold text-sm transition-all">
+                <span>Explore Hotels on Maps</span>
+                <span>↗</span>
+              </a>
+              <a href="https://www.google.com/maps/search/tea+bungalows+Sri+Lanka/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-sm border border-white/15 transition-all">
+                <span>Tea Estate Bungalows ↗</span>
+              </a>
+            </div>
+            <!-- Decorative Glow -->
+            <div class="absolute -right-16 -bottom-16 w-72 h-72 rounded-full bg-antiqueGold/15 blur-3xl pointer-events-none"></div>
+          </div>
+
+          <!-- Culinary & Dining Bento Card -->
+          <div class="lg:col-span-5 bg-white rounded-3xl p-8 sm:p-10 border border-emeraldDeep/10 shadow-luxury flex flex-col justify-between">
+            <div>
+              <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sandWarm text-emeraldDeep text-xs font-bold uppercase tracking-wider mb-5">
+                🍽️ Culinary Heritage
+              </span>
+              <h3 class="font-editorial text-2xl sm:text-3xl font-bold text-emeraldDeep mb-4 leading-snug">
+                Savor Ceylon Spices & Coastal Seafood
+              </h3>
+              <p class="text-inkMuted text-sm sm:text-base leading-relaxed mb-6">
+                Experience authentic clay-pot rice & curry, crisp hoppers at dawn, Jaffna crab specialties, and single-estate Ceylon tea tastings.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-3 pt-4 border-t border-emeraldDeep/10">
+              <a href="https://www.google.com/maps/search/restaurants+in+Sri+Lanka/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emeraldDeep hover:bg-emeraldMid text-sandIvory font-bold text-sm transition-all">
+                <span>Find Restaurants ↗</span>
+              </a>
+              <a href="https://www.google.com/maps/search/cafes+in+Sri+Lanka/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-sandWarm hover:bg-antiqueGold/25 text-emeraldDeep font-bold text-sm transition-all">
+                <span>Artisan Cafés ↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Travel Essentials Bento Section -->
+    <section id="tips" class="py-20 sm:py-24 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-14">
+          <span class="text-xs font-extrabold uppercase tracking-[0.25em] text-emeraldLight block mb-2.5">
+            Plan With Confidence
+          </span>
+          <h2 class="font-editorial text-3xl sm:text-5xl font-bold text-emeraldDeep tracking-tight mb-4">
+            Essential Island Travel Wisdom
+          </h2>
+          <p class="text-inkMuted text-sm sm:text-base">
+            Thoughtful preparation ensures seamless journeys across Sri Lanka’s diverse microclimates and heritage sites.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Tip 1: Visas -->
+          <div class="bg-white rounded-3xl p-7 border border-emeraldDeep/10 shadow-glass hover:shadow-luxury transition-all">
+            <div class="w-12 h-12 rounded-2xl bg-emeraldDeep/5 text-2xl flex items-center justify-center mb-5">🛂</div>
+            <h3 class="font-editorial text-xl font-bold text-emeraldDeep mb-2.5">Visas & Entry</h3>
+            <p class="text-inkMuted text-sm leading-relaxed">
+              Verify current Electronic Travel Authorization (ETA) and passport validity requirements via official Sri Lankan immigration portals prior to departure.
+            </p>
+          </div>
+
+          <!-- Tip 2: Scenic Transport -->
+          <div class="bg-white rounded-3xl p-7 border border-emeraldDeep/10 shadow-glass hover:shadow-luxury transition-all">
+            <div class="w-12 h-12 rounded-2xl bg-emeraldDeep/5 text-2xl flex items-center justify-center mb-5">🚂</div>
+            <h3 class="font-editorial text-xl font-bold text-emeraldDeep mb-2.5">Scenic Transit</h3>
+            <p class="text-inkMuted text-sm leading-relaxed">
+              Reserve hill-country train seats (Kandy to Ella) weeks ahead. For flexible multi-stop routes, private drivers or coastal expressways save hours.
+            </p>
+          </div>
+
+          <!-- Tip 3: Dual Monsoons -->
+          <div class="bg-white rounded-3xl p-7 border border-emeraldDeep/10 shadow-glass hover:shadow-luxury transition-all">
+            <div class="w-12 h-12 rounded-2xl bg-emeraldDeep/5 text-2xl flex items-center justify-center mb-5">🌤️</div>
+            <h3 class="font-editorial text-xl font-bold text-emeraldDeep mb-2.5">Two-Season Sun</h3>
+            <p class="text-inkMuted text-sm leading-relaxed">
+              Dec–Apr brings sunshine to the South & West coasts; May–Sep illuminates the East coast (Trincomalee, Arugam Bay, Pasikudah).
+            </p>
+          </div>
+
+          <!-- Tip 4: Responsible Etiquette -->
+          <div class="bg-white rounded-3xl p-7 border border-emeraldDeep/10 shadow-glass hover:shadow-luxury transition-all">
+            <div class="w-12 h-12 rounded-2xl bg-emeraldDeep/5 text-2xl flex items-center justify-center mb-5">🌿</div>
+            <h3 class="font-editorial text-xl font-bold text-emeraldDeep mb-2.5">Sacred Etiquette</h3>
+            <p class="text-inkMuted text-sm leading-relaxed">
+              Cover shoulders and knees and remove footwear at temples. Maintain respectful distances during wildlife safaris and avoid single-use plastics.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Editorial About / Ayubowan Manifesto -->
+    <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 bg-white border-t border-emeraldDeep/10">
+      <div class="max-w-4xl mx-auto text-center">
+        <span class="font-editorial italic text-2xl text-antiqueGold block mb-2">Ayubowan · ආයුබෝවන්</span>
+        <h2 class="font-editorial text-3xl sm:text-5xl font-bold text-emeraldDeep mb-6">
+          One Island. A Thousand Stories.
+        </h2>
+        <p class="text-inkMuted text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+          “Ayubowan” wishes you the gift of a long and healthy life. Discover Sri Lanka is crafted as an editorial starting point to inspire your journey across our emerald isle—always verify local opening hours, seasonal conditions, and conservation guidelines before travelling.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Luxury Dark Emerald Footer -->
+  <footer class="bg-emeraldDeep text-sandIvory/80 pt-16 pb-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 pb-12 border-b border-white/10">
+        <div>
+          <div class="font-editorial text-2xl font-bold text-sandIvory mb-3">
+            Discover <span class="italic font-medium text-antiqueGoldLight">Sri Lanka</span> 🇱🇰
+          </div>
+          <p class="text-sm text-sandIvory/70 max-w-sm leading-relaxed">
+            An editorial travel compendium showcasing 51 cultural monuments, misty peaks, golden shores, and wildlife sanctuaries across Sri Lanka.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="font-sans text-xs font-extrabold uppercase tracking-[0.2em] text-antiqueGoldLight mb-4">Quick Navigation</h3>
+          <ul class="space-y-2.5 text-sm">
+            <li><a href="#places" class="hover:text-antiqueGoldLight transition-colors">All 51 Destinations</a></li>
+            <li><a href="#stay" class="hover:text-antiqueGoldLight transition-colors">Hotels & Culinary Guides</a></li>
+            <li><a href="#tips" class="hover:text-antiqueGoldLight transition-colors">Visa & Weather Tips</a></li>
+            <li><button type="button" id="footerWishlistBtn" class="hover:text-antiqueGoldLight transition-colors cursor-pointer">Open Saved Trip Planner ❤️</button></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="font-sans text-xs font-extrabold uppercase tracking-[0.2em] text-antiqueGoldLight mb-4">Traveler Notice</h3>
+          <p class="text-xs text-sandIvory/65 leading-relaxed">
+            Destination photographs are dynamically sourced via Wikimedia Commons for illustrative inspiration. Please confirm park permits, train timetables, and entry fees with official local authorities.
+          </p>
+        </div>
+      </div>
+
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-sandIvory/60">
+        <p>© 2026 Discover Sri Lanka · Explore the Wonder Island.</p>
+        <p>Crafted with warmth in Sri Lanka</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Banner -->
+  <div id="toast" role="status" aria-live="polite" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 translate-y-4 transition-all duration-300">
+    <div class="bg-emeraldDeep text-sandIvory px-5 py-3 rounded-full shadow-2xl border border-antiqueGold/40 flex items-center gap-2.5 text-sm font-semibold">
+      <span id="toastIcon">✨</span>
+      <span id="toastMsg">Notification</span>
+    </div>
+  </div>
+
+  <!-- Destination Detail Modal -->
+  <dialog id="placeDialog" class="rounded-3xl p-0 w-[min(880px,calc(100%-24px))] max-h-[90vh] bg-sandIvory text-inkDark shadow-2xl border border-emeraldDeep/15 overflow-y-auto">
+    <div id="dialogBody"></div>
+  </dialog>
+
+  <!-- Trip Planner / Wishlist Drawer Modal -->
+  <dialog id="wishlistDialog" class="rounded-3xl p-0 w-[min(640px,calc(100%-24px))] max-h-[88vh] bg-sandIvory text-inkDark shadow-2xl border border-emeraldDeep/15 overflow-y-auto">
+    <div class="p-6 sm:p-8">
+      <div class="flex items-start justify-between gap-4 pb-5 border-b border-emeraldDeep/10">
+        <div>
+          <span class="text-xs font-extrabold uppercase tracking-[0.2em] text-emeraldLight block mb-1">Your Custom Itinerary</span>
+          <h2 class="font-editorial text-2xl sm:text-3xl font-bold text-emeraldDeep">Saved Trip Wishlist ❤️</h2>
+        </div>
+        <button type="button" onclick="wishlistDialog.close()" aria-label="Close Trip Planner" class="w-10 h-10 rounded-full bg-white hover:bg-sandWarm border border-emeraldDeep/10 flex items-center justify-center text-xl font-bold text-emeraldDeep cursor-pointer">
+          ×
+        </button>
+      </div>
+
+      <div id="wishlistBody" class="py-6"></div>
+
+      <div id="wishlistFooter" class="pt-5 border-t border-emeraldDeep/10 flex flex-wrap items-center justify-between gap-3">
+        <button id="copyItineraryBtn" type="button" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emeraldDeep hover:bg-emeraldMid text-sandIvory text-xs sm:text-sm font-bold transition-all cursor-pointer">
+          <span>📋 Copy Itinerary List</span>
+        </button>
+        <button id="printItineraryBtn" type="button" class="px-4 py-2.5 rounded-full text-xs font-bold text-emeraldDeep bg-sandWarm hover:bg-antiqueGold/25 transition-colors cursor-pointer">Print / Save PDF</button>
+        <button id="clearWishlistBtn" type="button" class="px-4 py-2.5 rounded-full text-xs font-bold text-rose-700 hover:bg-rose-50 transition-colors cursor-pointer">
+          Clear All Saved
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    // 0. Hero Cinematic Auto-Changing Sri Lankan Landscapes Slideshow
+    const heroLandscapes = [
+      {
+        title: "Sigiriya Rock Fortress · Cultural Triangle",
+        query: "Sigiriya Lion Rock Sri Lanka",
+        fallback: "https://images.unsplash.com/photo-1586613835341-78c143aef52c?auto=format&fit=crop&w=2000&q=85"
+      },
+      {
+        title: "Nine Arch Bridge · Ella Highlands",
+        query: "Nine Arch Bridge Ella Sri Lanka",
+        fallback: "https://images.unsplash.com/photo-1588598198321-9735fd5e7e7d?auto=format&fit=crop&w=2000&q=85"
+      },
+      {
+        title: "Mirissa Coconut Palm Coast · Southern Province",
+        query: "Mirissa beach coconut tree hill Sri Lanka",
+        fallback: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=2000&q=85"
+      },
+      {
+        title: "Misty Tea Plantations · Nuwara Eliya & Kandy",
+        query: "Nuwara Eliya tea plantation Sri Lanka",
+        fallback: "https://images.unsplash.com/photo-1546708973-b339540b5162?auto=format&fit=crop&w=2000&q=85"
+      },
+      {
+        title: "Yala Wildlife Sanctuary · Untamed Safari",
+        query: "Yala National Park elephant leopard Sri Lanka",
+        fallback: "https://images.unsplash.com/photo-1580637250481-b78db3e6f84b?auto=format&fit=crop&w=2000&q=85"
+      }
+    ];
+
+    function initHeroSlideshow() {
+      const container = document.getElementById('heroSlideshow');
+      const dotsContainer = document.getElementById('heroSlideDots');
+      const captionEl = document.getElementById('heroSlideCaption');
+      if (!container || !dotsContainer || !captionEl) return;
+
+      let currentSlide = 0;
+      let slideInterval = null;
+
+      heroLandscapes.forEach((item, idx) => {
+        // Create Slide Layer
+        const slideDiv = document.createElement('div');
+        slideDiv.className = `hero-slide ${idx === 0 ? 'active' : ''}`;
+        slideDiv.dataset.slideIdx = idx;
+
+        const img = document.createElement('img');
+        img.src = item.fallback;
+        img.alt = item.title;
+        img.className = 'w-full h-full object-cover object-center';
+        img.onerror = () => {
+          img.src = placeholderFor(item.title.split('·')[0].trim());
+        };
+        slideDiv.appendChild(img);
+        container.appendChild(slideDiv);
+
+        // Enhance with crisp high-res Wikimedia Commons photo if available
+        fetch(`https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(item.query)}&gsrnamespace=6&gsrlimit=6&prop=imageinfo&iiprop=url&iiurlwidth=1920&format=json&origin=*`)
+          .then(res => res.ok ? res.json() : null)
+          .then(data => {
+            const pages = Object.values(data?.query?.pages || {});
+            const highRes = pages
+              .map(p => p.imageinfo?.[0]?.thumburl)
+              .find(u => u && /\.(jpe?g|png|webp)/i.test(u) && !/map|flag|logo|icon/i.test(u));
+            if (highRes) {
+              const preloader = new Image();
+              preloader.onload = () => { img.src = highRes; };
+              preloader.src = highRes;
+            }
+          })
+          .catch(() => { /* Keep reliable fallback image */ });
+
+        // Create Interactive Dot Indicator
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.setAttribute('aria-label', `Show ${item.title}`);
+        dot.className = `h-2 rounded-full transition-all duration-300 cursor-pointer ${
+          idx === 0 ? 'w-6 bg-antiqueGold' : 'w-2 bg-white/45 hover:bg-white/80'
+        }`;
+        dot.addEventListener('click', () => {
+          goToSlide(idx);
+          restartAutoPlay();
+        });
+        dotsContainer.appendChild(dot);
+      });
+
+      function goToSlide(nextIndex) {
+        const slides = container.querySelectorAll('.hero-slide');
+        const dots = dotsContainer.querySelectorAll('button');
+        currentSlide = (nextIndex + heroLandscapes.length) % heroLandscapes.length;
+
+        slides.forEach((s, idx) => {
+          s.classList.toggle('active', idx === currentSlide);
+        });
+
+        dots.forEach((d, idx) => {
+          if (idx === currentSlide) {
+            d.className = 'h-2 w-6 rounded-full bg-antiqueGold transition-all duration-300 cursor-pointer';
+          } else {
+            d.className = 'h-2 w-2 rounded-full bg-white/45 hover:bg-white/80 transition-all duration-300 cursor-pointer';
+          }
+        });
+
+        captionEl.textContent = heroLandscapes[currentSlide].title;
+      }
+
+      function restartAutoPlay() {
+        clearInterval(slideInterval);
+        slideInterval = setInterval(() => {
+          goToSlide(currentSlide + 1);
+        }, 6500);
+      }
+
+      restartAutoPlay();
+    }
+
+    // 1. All 51 Original Destinations Preserved Intact
+    const places = [
+      ["Sigiriya","Culture","Explore the ancient rock fortress, landscaped gardens and frescoes."],
+      ["Dambulla Cave Temple","Culture","Visit the historic cave temple complex, known for Buddhist murals and statues."],
+      ["Kandy","Culture","Discover the hill-country city, its lake and the Temple of the Sacred Tooth Relic."],
+      ["Anuradhapura","Culture","Explore the ancient city, sacred sites, stupas and archaeological remains."],
+      ["Polonnaruwa","Culture","See medieval ruins, royal monuments and remarkable stone carvings."],
+      ["Galle Fort","Culture","Walk through historic streets, ramparts, boutiques and ocean-facing viewpoints."],
+      ["Jaffna","Culture","Experience northern Sri Lankan culture, historic landmarks and local cuisine."],
+      ["Mihintale","Culture","Visit an important historic and religious site set among rocky hills."],
+      ["Yapahuwa","Culture","Discover the dramatic rock fortress and its ornate stone staircase."],
+      ["Kataragama","Culture","Explore a major pilgrimage town with diverse religious traditions."],
+      ["Ella","Nature","Enjoy mountain scenery, viewpoints, waterfalls and hill-country charm."],
+      ["Nuwara Eliya","Nature","Discover cool-climate scenery, gardens and tea-growing landscapes."],
+      ["Horton Plains","Nature","Walk through a protected highland plateau with grasslands and cloud forest."],
+      ["Knuckles Mountain Range","Nature","Explore rugged mountain landscapes and guided hiking routes."],
+      ["Ritigala","Nature","Explore a forested mountain area with archaeological remains and quiet trails."],
+      ["Haputale","Nature","Take in tea-country views, mountain air and scenic viewpoints."],
+      ["Sinharaja Forest Reserve","Nature","Explore a UNESCO-listed rainforest with a licensed guide."],
+      ["Diyaluma Falls","Nature","Visit a striking waterfall; use safe, permitted access points only."],
+      ["Ravana Falls","Nature","Admire a waterfall near Ella from designated safe viewing areas."],
+      ["Bambarakanda Falls","Nature","See Sri Lanka's highest waterfall in a scenic hill-country setting."],
+      ["Mirissa","Beach","Relax by the sea and explore the laid-back southern coastline."],
+      ["Unawatuna","Beach","Enjoy a sheltered bay, coastal walks and nearby heritage attractions."],
+      ["Hiriketiya","Beach","Visit a small curved bay known for its relaxed coastal atmosphere."],
+      ["Arugam Bay","Beach","Explore the east-coast beach town, especially popular during surf season."],
+      ["Nilaveli","Beach","Discover a long sandy beach on the eastern coast near Trincomalee."],
+      ["Pasikudah","Beach","Enjoy a shallow-water bay and a relaxed east-coast beach setting."],
+      ["Bentota","Beach","Explore the west-coast beach area and nearby river experiences."],
+      ["Tangalle","Beach","Discover quiet southern coastline, coves and long stretches of sand."],
+      ["Weligama","Beach","Visit a lively coastal town with a broad bay and surf-friendly areas."],
+      ["Kalpitiya","Beach","Explore beaches, lagoons and marine life with responsible local guides."],
+      ["Yala National Park","Wildlife","Discover wildlife on a guided safari; sightings are never guaranteed."],
+      ["Udawalawe National Park","Wildlife","A well-known place to observe wild elephants from safari vehicles."],
+      ["Wilpattu National Park","Wildlife","Explore a large protected landscape known for its natural lakes and wildlife."],
+      ["Minneriya National Park","Wildlife","Visit a dry-zone park known for seasonal elephant gatherings."],
+      ["Bundala National Park","Wildlife","Discover wetlands and birdlife in an important coastal ecosystem."],
+      ["Pinnawala","Wildlife","Research animal-welfare standards and conservation practices before visiting."],
+      ["Pigeon Island National Park","Nature","Discover a protected marine area; follow reef-protection guidance."],
+      ["Trincomalee","Culture","Explore the natural harbour, coastal scenery and historic religious sites."],
+      ["Colombo","Culture","Explore museums, markets, architecture, food and waterfront spaces."],
+      ["Negombo","Beach","Discover fishing heritage, lagoon scenery and nearby beach areas."],
+      ["Hikkaduwa","Beach","Enjoy the coastal town and marine attractions while protecting coral habitats."],
+      ["Nine Arch Bridge","Nature","View the famous railway bridge near Ella; keep clear of railway tracks."],
+      ["Demodara Loop","Nature","Learn about remarkable railway engineering near Ella and Demodara."],
+      ["Adam's Peak (Sri Pada)","Adventure","Plan a climb to this revered mountain, checking seasonal access and conditions."],
+      ["Pidurangala Rock","Adventure","Hike to a panoramic viewpoint overlooking the Sigiriya area."],
+      ["Little Adam's Peak","Adventure","Take a popular hill-country walk with broad views around Ella."],
+      ["Riverston","Adventure","Enjoy mountain roads, viewpoints and nature walks in the Matale region."],
+      ["Kitulgala","Adventure","Discover rainforest scenery and outdoor activities with qualified operators."],
+      ["Ambuluwawa Tower","Adventure","Visit the hilltop complex near Gampola and check access and weather conditions."],
+      ["Madu River","Nature","Take a responsible boat trip through mangroves with a licensed operator."],
+      ["Pasikuda Lagoon","Nature","Explore coastal lagoon scenery while respecting local ecosystems."]
+    ];
+
+    // Category Metadata (Icons, Best Seasons, Editorial Vibe Tags)
+    const categoryMeta = {
+      Culture: {
+        icon: '🏛️',
+        bestTime: 'Year-round (Jan–Apr & Jul–Sep ideal)',
+        vibe: ['Ancient Heritage', 'Sacred Architecture', 'Living History'],
+        tip: 'Dress modestly covering shoulders and knees when entering temples and sacred monuments.'
+      },
+      Nature: {
+        icon: '🌿',
+        bestTime: 'January – April & August – September',
+        vibe: ['Misty Highlands', 'Scenic Trails', 'Lush Landscapes'],
+        tip: 'Start morning walks early for clear mountain vistas before afternoon mist rolls in.'
+      },
+      Beach: {
+        icon: '🏖️',
+        bestTime: 'Dec–Apr (South/West) · May–Sep (East)',
+        vibe: ['Golden Sands', 'Turquoise Bays', 'Coastal Leisure'],
+        tip: 'Check seasonal ocean currents and swim only in designated safe coastal zones.'
+      },
+      Adventure: {
+        icon: '⛰️',
+        bestTime: 'December – April (Dry Clear Skies)',
+        vibe: ['Summit Views', 'Active Exploration', 'Sunrise Treks'],
+        tip: 'Carry sturdy footwear, hydration, and check local weather advisories before climbing.'
+      },
+      Wildlife: {
+        icon: '🐘',
+        bestTime: 'February – October (Dry Safari Months)',
+        vibe: ['Guided Safaris', 'Biodiversity', 'Conservation'],
+        tip: 'Book dawn or late-afternoon jeep safaris with licensed naturalist trackers.'
+      }
+    };
+
+    // East coast exceptions for tailored seasonal hints
+    const eastCoastPlaces = new Set(['Arugam Bay', 'Nilaveli', 'Pasikudah', 'Trincomalee', 'Pigeon Island National Park', 'Pasikuda Lagoon']);
+
+    // 2. Wikimedia Commons Multi-Photo Fetching Logic (Up to 4 photos per place)
+    const multiImageCache = new Map();
+
+    const placeholderFor = (name) => 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(
+      `<svg xmlns="http://www.w3.org/2000/svg" width="900" height="560" viewBox="0 0 900 560">
+        <defs>
+          <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+            <stop stop-color="#042f2a"/>
+            <stop offset="1" stop-color="#074e45"/>
+          </linearGradient>
+        </defs>
+        <rect width="900" height="560" fill="url(#g)"/>
+        <circle cx="760" cy="110" r="140" fill="#d4a359" fill-opacity="0.08"/>
+        <text x="50%" y="46%" fill="#fcfaf5" font-family="Georgia, serif" font-size="38" font-weight="bold" text-anchor="middle">${String(name).replace(/[&<>"']/g, ' ')}</text>
+        <text x="50%" y="56%" fill="#e8c488" font-family="sans-serif" font-size="18" letter-spacing="3" text-anchor="middle">SRI LANKA · CURATED GUIDE</text>
+      </svg>`
+    );
+
+    async function findPlacePhotos(name, limit = 4) {
+      if (multiImageCache.has(name)) return multiImageCache.get(name);
+      const task = (async () => {
+        const query = encodeURIComponent(`${name} Sri Lanka`);
+        const api = `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${query}&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url&iiurlwidth=1100&format=json&origin=*`;
+        try {
+          const response = await fetch(api);
+          if (!response.ok) throw new Error('Image search unavailable');
+          const data = await response.json();
+          const pages = Object.values(data.query?.pages || {});
+          const usableUrls = pages
+            .map(page => page.imageinfo?.[0]?.thumburl)
+            .filter(url => url && /\.(jpe?g|png|webp)/i.test(url) && !/map|flag|logo|icon|coat_of_arms/i.test(url));
+          return [...new Set(usableUrls)].slice(0, limit);
+        } catch (error) {
+          return [];
+        }
+      })();
+      multiImageCache.set(name, task);
+      return task;
+    }
+
+    function loadPlacePhoto(img, name) {
+      img.src = placeholderFor(name);
+      img.classList.add('loaded');
+      findPlacePhotos(name, 4).then(urls => {
+        if (urls && urls.length > 0) {
+          const loader = new Image();
+          loader.onload = () => {
+            img.classList.remove('loaded');
+            requestAnimationFrame(() => {
+              img.src = urls[0];
+              img.classList.add('loaded');
+            });
+          };
+          loader.src = urls[0];
+        }
+      });
+    }
+
+    // 3. Wishlist / Trip Planner State (Persisted in localStorage)
+    let savedIndices = new Set();
+    try {
+      const stored = JSON.parse(localStorage.getItem('dsl_wishlist_v1') || '[]');
+      if (Array.isArray(stored)) {
+        savedIndices = new Set(stored.filter(i => Number.isInteger(i) && i >= 0 && i < places.length));
+      }
+    } catch (e) {
+      savedIndices = new Set();
+    }
+
+    function persistWishlist() {
+      try {
+        localStorage.setItem('dsl_wishlist_v1', JSON.stringify([...savedIndices]));
+      } catch (e) { /* Ignore storage quota errors */ }
+      updateWishlistUI();
+    }
+
+    function toggleWishlist(index) {
+      const placeName = places[index][0];
+      if (savedIndices.has(index)) {
+        savedIndices.delete(index);
+        showToast('Removed from your Trip Planner', '💔');
+      } else {
+        savedIndices.add(index);
+        showToast(`Saved "${placeName}" to Trip Planner`, '❤️');
+      }
+      persistWishlist();
+      syncHeartButtons();
+      if (activeCategory === 'Saved') renderCards();
+    }
+
+    function updateWishlistUI() {
+      const count = savedIndices.size;
+      const badge = document.getElementById('wishlistBadge');
+      const filterBadge = document.getElementById('savedFilterCount');
+      if (badge) badge.textContent = count;
+      if (filterBadge) filterBadge.textContent = count;
+    }
+
+    function syncHeartButtons() {
+      document.querySelectorAll('[data-heart-index]').forEach(btn => {
+        const idx = Number(btn.dataset.heartIndex);
+        const isSaved = savedIndices.has(idx);
+        btn.setAttribute('aria-pressed', isSaved ? 'true' : 'false');
+        btn.innerHTML = isSaved ? '❤️' : '🤍';
+        btn.classList.toggle('bg-rose-50', isSaved);
+        btn.classList.toggle('border-rose-200', isSaved);
+      });
+    }
+
+    // 4. Toast Notification Helper
+    let toastTimer = null;
+    function showToast(message, icon = '✨') {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = message;
+      document.getElementById('toastIcon').textContent = icon;
+      toast.classList.remove('opacity-0', 'translate-y-4');
+      toast.classList.add('opacity-100', 'translate-y-0');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-4');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 2800);
+    }
+
+    // 5. Render Destination Cards & Filter Logic
+    const cardsContainer = document.getElementById('cards');
+    const placeDialog = document.getElementById('placeDialog');
+    const wishlistDialog = document.getElementById('wishlistDialog');
+
+    const photoObserver = ('IntersectionObserver' in window)
+      ? new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              photoObserver.unobserve(img);
+              loadPlacePhoto(img, img.dataset.place);
+            }
+          });
+        }, { rootMargin: '280px' })
+      : null;
+
+    // Populate Category Counts
+    function populateCategoryCounts() {
+      const counts = { All: places.length, Culture: 0, Nature: 0, Beach: 0, Adventure: 0, Wildlife: 0 };
+      places.forEach(([, cat]) => { if (counts[cat] !== undefined) counts[cat]++; });
+      Object.entries(counts).forEach(([cat, num]) => {
+        const el = document.querySelector(`[data-count-for="${cat}"]`);
+        if (el) el.textContent = num;
+      });
+    }
+
+    let activeCategory = 'All';
+    let currentSort = 'featured';
+
+    function buildCardElement(index) {
+      const [name, cat, desc] = places[index];
+      const meta = categoryMeta[cat] || { icon: '📍' };
+      const isSaved = savedIndices.has(index);
+
+      const article = document.createElement('article');
+      article.className = 'destination group bg-white rounded-3xl overflow-hidden border border-emeraldDeep/10 shadow-glass hover:shadow-luxury-hover hover:-translate-y-1.5 transition-all duration-300 flex flex-col';
+      article.dataset.index = index;
+      article.dataset.cat = cat;
+
+      article.innerHTML = `
+        <div class="relative aspect-[16/10] overflow-hidden bg-emeraldDeep/10">
+          <img
+            src="${placeholderFor(name)}"
+            data-place="${name}"
+            alt="${name}, Sri Lanka"
+            loading="lazy"
+            class="w-full h-full object-cover photo-fade group-hover:scale-105 transition-transform duration-700"
+          >
+          <div class="absolute inset-0 bg-gradient-to-t from-emeraldDeep/55 via-transparent to-black/15 pointer-events-none"></div>
+
+          <!-- Category Pill -->
+          <span class="absolute top-3.5 left-3.5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sandIvory/95 backdrop-blur-md text-emeraldDeep text-[11px] font-extrabold uppercase tracking-wider shadow-sm">
+            <span>${meta.icon}</span>
+            <span>${cat}</span>
+          </span>
+
+          <!-- Wishlist Heart Button -->
+          <button
+            type="button"
+            data-heart-index="${index}"
+            aria-label="Save ${name} to Trip Planner"
+            aria-pressed="${isSaved ? 'true' : 'false'}"
+            class="absolute top-3.5 right-3.5 w-9 h-9 rounded-full bg-white/95 backdrop-blur-md border ${isSaved ? 'bg-rose-50 border-rose-200' : 'border-emeraldDeep/10'} flex items-center justify-center text-base shadow-sm hover:scale-110 transition-transform cursor-pointer"
+          >
+            ${isSaved ? '❤️' : '🤍'}
+          </button>
+        </div>
+
+        <div class="p-6 flex flex-col flex-1">
+          <h3 class="font-editorial text-2xl font-bold text-emeraldDeep group-hover:text-emeraldLight transition-colors mb-2 leading-snug">
+            ${name}
+          </h3>
+          <p class="text-inkMuted text-sm leading-relaxed mb-6 flex-1">
+            ${desc}
+          </p>
+
+          <div class="pt-4 border-t border-emeraldDeep/10 flex items-center justify-between gap-2.5">
+            <button
+              type="button"
+              data-open="${index}"
+              class="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full bg-emeraldDeep hover:bg-emeraldMid text-sandIvory text-xs font-bold tracking-wide transition-colors cursor-pointer"
+            >
+              <span>Explore Guide</span>
+              <span>→</span>
+            </button>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name + ' Sri Lanka')}"
+              target="_blank"
+              rel="noopener"
+              aria-label="View ${name} on Google Maps"
+              class="inline-flex items-center justify-center gap-1 px-3.5 py-2.5 rounded-full bg-sandWarm hover:bg-antiqueGold/25 text-emeraldDeep text-xs font-bold transition-colors"
+            >
+              <span>Map</span>
+              <span>↗</span>
+            </a>
+          </div>
+        </div>
+      `;
+
+      const img = article.querySelector('img');
+      if (photoObserver) photoObserver.observe(img);
+      else loadPlacePhoto(img, name);
+
+      return article;
+    }
+
+    function renderCards() {
+      const searchInput = document.getElementById('search');
+      const clearBtn = document.getElementById('clearSearch');
+      const resetAllBtn = document.getElementById('resetAllFiltersBtn');
+      const q = searchInput.value.trim().toLowerCase();
+
+      clearBtn.classList.toggle('hidden', q.length === 0);
+      resetAllBtn.classList.toggle('hidden', q.length === 0 && activeCategory === 'All' && currentSort === 'featured');
+
+      // Filter indices
+      let filteredIndices = places.map((_, idx) => idx).filter(idx => {
+        const [name, cat, desc] = places[idx];
+        const matchesCat =
+          activeCategory === 'All' ||
+          (activeCategory === 'Saved' && savedIndices.has(idx)) ||
+          cat === activeCategory;
+        const matchesSearch =
+          !q ||
+          name.toLowerCase().includes(q) ||
+          cat.toLowerCase().includes(q) ||
+          desc.toLowerCase().includes(q);
+        return matchesCat && matchesSearch;
+      });
+
+      // Sort indices
+      if (currentSort === 'az') {
+        filteredIndices.sort((a, b) => places[a][0].localeCompare(places[b][0]));
+      } else if (currentSort === 'za') {
+        filteredIndices.sort((a, b) => places[b][0].localeCompare(places[a][0]));
+      }
+
+      cardsContainer.innerHTML = '';
+
+      if (filteredIndices.length === 0) {
+        cardsContainer.innerHTML = `
+          <div class="col-span-full bg-white rounded-3xl p-12 text-center border border-emeraldDeep/10 shadow-glass">
+            <div class="text-4xl mb-3">${activeCategory === 'Saved' ? '❤️' : '🧭'}</div>
+            <h3 class="font-editorial text-2xl font-bold text-emeraldDeep mb-2">
+              ${activeCategory === 'Saved' ? 'Your Trip Wishlist is Empty' : 'No Matching Destinations Found'}
+            </h3>
+            <p class="text-inkMuted text-sm max-w-md mx-auto mb-6">
+              ${activeCategory === 'Saved'
+                ? 'Tap the heart icon on any destination card to save places to your personal Sri Lanka itinerary.'
+                : 'Try adjusting your search keywords or switching back to all 51 destinations.'}
+            </p>
+            <button type="button" onclick="resetAllFilters()" class="px-6 py-2.5 rounded-full bg-emeraldDeep text-sandIvory text-xs font-bold uppercase tracking-wider cursor-pointer">
+              Explore All 51 Places
+            </button>
+          </div>
+        `;
+      } else {
+        const fragment = document.createDocumentFragment();
+        filteredIndices.forEach(idx => fragment.appendChild(buildCardElement(idx)));
+        cardsContainer.appendChild(fragment);
+      }
+
+      const labelSuffix = activeCategory === 'Saved' ? 'saved destination' : 'destination';
+      document.getElementById('count').textContent =
+        `Showing ${filteredIndices.length} ${labelSuffix}${filteredIndices.length === 1 ? '' : 's'}`;
+    }
+
+    function resetAllFilters() {
+      document.getElementById('search').value = '';
+      currentSort = 'featured';
+      document.getElementById('sortSelect').value = 'featured';
+      activeCategory = 'All';
+      document.querySelectorAll('.filter').forEach(btn => {
+        const isAll = btn.dataset.cat === 'All';
+        btn.classList.toggle('active', isAll);
+        btn.classList.toggle('bg-emeraldDeep', isAll);
+        btn.classList.toggle('text-sandIvory', isAll);
+        btn.classList.toggle('shadow-md', isAll);
+        btn.classList.toggle('bg-white', !isAll);
+        btn.classList.toggle('text-inkDark', !isAll);
+      });
+      renderCards();
+    }
+
+    // Category Filter Click Handlers
+    document.querySelectorAll('.filter').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter').forEach(b => {
+          b.classList.remove('active', 'bg-emeraldDeep', 'text-sandIvory', 'shadow-md');
+          b.classList.add('bg-white', 'text-inkDark');
+        });
+        btn.classList.add('active', 'bg-emeraldDeep', 'text-sandIvory', 'shadow-md');
+        btn.classList.remove('bg-white', 'text-inkDark');
+        activeCategory = btn.dataset.cat;
+        renderCards();
+      });
+    });
+
+    // Search & Sort Event Listeners
+    document.getElementById('search').addEventListener('input', renderCards);
+    document.getElementById('sortSelect').addEventListener('change', e => {
+      currentSort = e.target.value;
+      renderCards();
+    });
+    document.getElementById('clearSearch').addEventListener('click', () => {
+      const s = document.getElementById('search');
+      s.value = '';
+      renderCards();
+      s.focus();
+    });
+    document.getElementById('resetAllFiltersBtn').addEventListener('click', resetAllFilters);
+
+    // Hero Search & Quick Tags
+    document.getElementById('heroSearchForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const val = document.getElementById('heroSearchInput').value.trim();
+      const mainSearch = document.getElementById('search');
+      mainSearch.value = val;
+      renderCards();
+      document.getElementById('places').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    document.querySelectorAll('[data-quick-search]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const term = btn.dataset.quickSearch;
+        document.getElementById('search').value = term;
+        renderCards();
+        document.getElementById('places').scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // Surprise Me Random Destination Picker
+    function triggerSurpriseMe() {
+      const randomIndex = Math.floor(Math.random() * places.length);
+      showToast(`Discovering ${places[randomIndex][0]}...`, '✨');
+      openPlace(randomIndex);
+    }
+    document.getElementById('surpriseBtn').addEventListener('click', triggerSurpriseMe);
+    document.getElementById('headerSurpriseBtn').addEventListener('click', triggerSurpriseMe);
+
+    // 6. Enhanced Detail Modal with Multi-Photo Gallery, Highlights & Reviews
+    function escapeHtml(v) {
+      return String(v).replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[c]));
+    }
+
+    function getReviews(name) {
+      try {
+        return JSON.parse(localStorage.getItem('dsl_reviews_' + name) || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function showReviews(name) {
+      const list = document.getElementById('reviewList');
+      if (!list) return;
+      const reviews = getReviews(name);
+      list.innerHTML = reviews.length
+        ? reviews.map(r => `
+            <div class="bg-white rounded-2xl p-4 border border-emeraldDeep/10 shadow-sm">
+              <div class="flex items-center justify-between mb-1.5">
+                <strong class="text-sm font-bold text-emeraldDeep">${escapeHtml(r.name)}</strong>
+                <span class="text-antiqueGold text-sm tracking-wider">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</span>
+              </div>
+              <p class="text-inkMuted text-sm leading-relaxed">${escapeHtml(r.text)}</p>
+            </div>
+          `).join('')
+        : '<p class="text-xs sm:text-sm text-inkMuted italic bg-white/70 rounded-2xl p-4 border border-dashed border-emeraldDeep/15">No visitor notes yet. Share your first-hand travel tip below to help fellow explorers.</p>';
+    }
+
+    function copyTextFallback(text) {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        return true;
+      } catch (err) {
+        return false;
+      } finally {
+        document.body.removeChild(textarea);
+      }
+    }
+
+    function openPlace(i) {
+      const [name, cat, desc] = places[i];
+      const meta = categoryMeta[cat] || categoryMeta.Culture;
+      const bestSeason = eastCoastPlaces.has(name)
+        ? 'May – September (Sunny East Coast Season)'
+        : meta.bestTime;
+      const isSaved = savedIndices.has(i);
+      const placeholder = placeholderFor(name);
+      const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name + ' Sri Lanka')}`;
+
+      document.getElementById('dialogBody').innerHTML = `
+        <!-- Modal Hero Header -->
+        <div class="relative h-64 sm:h-80 bg-emeraldDeep overflow-hidden">
+          <img id="modalMainPhoto" src="${placeholder}" alt="${name}" class="w-full h-full object-cover photo-fade">
+          <div class="absolute inset-0 bg-gradient-to-t from-emeraldDeep via-emeraldDeep/30 to-black/25"></div>
+
+          <!-- Top Floating Controls -->
+          <div class="absolute top-4 right-4 flex items-center gap-2.5">
+            <button
+              type="button"
+              id="modalWishlistBtn"
+              class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/95 backdrop-blur-md text-emeraldDeep text-xs font-bold shadow-md hover:scale-105 transition-transform cursor-pointer"
+            >
+              <span>${isSaved ? '❤️ Saved' : '🤍 Save to Trip'}</span>
+            </button>
+            <button
+              type="button"
+              onclick="placeDialog.close()"
+              aria-label="Close destination guide"
+              class="w-10 h-10 rounded-full bg-white/95 backdrop-blur-md text-emeraldDeep text-xl font-bold flex items-center justify-center shadow-md hover:bg-antiqueGold transition-colors cursor-pointer"
+            >
+              ×
+            </button>
+          </div>
+
+          <!-- Title Overlay -->
+          <div class="absolute bottom-5 left-6 right-6 text-sandIvory">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-antiqueGold text-emeraldDeep text-[11px] font-extrabold uppercase tracking-wider mb-2">
+              <span>${meta.icon}</span>
+              <span>${cat}</span>
+            </span>
+            <h2 class="font-editorial text-3xl sm:text-4xl font-bold leading-tight">${name}</h2>
+          </div>
+        </div>
+
+        <!-- Modal Body Content -->
+        <div class="p-6 sm:p-8 space-y-7">
+          <!-- Editorial Description & Experience Tags -->
+          <div>
+            <p class="text-inkDark text-base sm:text-lg leading-relaxed mb-4">
+              ${desc} Use this curated guide as an editorial starting point and verify current local opening times, permits, and weather conditions prior to your visit.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              ${meta.vibe.map(tag => `
+                <span class="px-3 py-1 rounded-full bg-sandWarm border border-emeraldDeep/10 text-emeraldDeep text-xs font-semibold">
+                  ✦ ${tag}
+                </span>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Travel Highlights Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="bg-white rounded-2xl p-4 border border-emeraldDeep/10">
+              <div class="text-[11px] font-extrabold uppercase tracking-wider text-emeraldLight mb-1">☀️ Ideal Visiting Window</div>
+              <div class="text-sm font-bold text-emeraldDeep">${bestSeason}</div>
+            </div>
+            <div class="bg-white rounded-2xl p-4 border border-emeraldDeep/10">
+              <div class="text-[11px] font-extrabold uppercase tracking-wider text-emeraldLight mb-1">🧭 Insider Tip</div>
+              <div class="text-sm text-inkMuted leading-snug">${meta.tip}</div>
+            </div>
+          </div>
+
+          <!-- Multi-Photo Wikimedia Gallery -->
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-editorial text-xl font-bold text-emeraldDeep">Visual Impressions</h3>
+              <span id="galleryStatus" class="text-xs text-inkMuted">Loading gallery...</span>
+            </div>
+            <div id="modalGalleryGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div class="aspect-[4/3] rounded-2xl overflow-hidden bg-emeraldDeep/10">
+                <img src="${placeholder}" alt="${name} view 1" class="w-full h-full object-cover photo-fade">
+              </div>
+              <div class="aspect-[4/3] rounded-2xl overflow-hidden bg-emeraldDeep/10">
+                <img src="${placeholder}" alt="${name} view 2" class="w-full h-full object-cover photo-fade">
+              </div>
+              <div class="aspect-[4/3] rounded-2xl overflow-hidden bg-emeraldDeep/10">
+                <img src="${placeholder}" alt="${name} view 3" class="w-full h-full object-cover photo-fade">
+              </div>
+              <div class="aspect-[4/3] rounded-2xl overflow-hidden bg-emeraldDeep/10">
+                <img src="${placeholder}" alt="${name} view 4" class="w-full h-full object-cover photo-fade">
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Action Buttons -->
+          <div class="flex flex-wrap gap-2.5 pt-2">
+            <a href="${mapUrl}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emeraldDeep hover:bg-emeraldMid text-sandIvory text-xs sm:text-sm font-bold transition-colors">
+              <span>📍 Open Google Maps ↗</span>
+            </a>
+            <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('hotels near ' + name + ' Sri Lanka')}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white hover:bg-sandWarm border border-emeraldDeep/15 text-emeraldDeep text-xs sm:text-sm font-bold transition-colors">
+              <span>🏨 Nearby Hotels ↗</span>
+            </a>
+            <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('restaurants near ' + name + ' Sri Lanka')}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white hover:bg-sandWarm border border-emeraldDeep/15 text-emeraldDeep text-xs sm:text-sm font-bold transition-colors">
+              <span>🍽️ Nearby Dining ↗</span>
+            </a>
+            <button type="button" id="sharePlaceBtn" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-sandWarm hover:bg-antiqueGold/30 text-emeraldDeep text-xs sm:text-sm font-bold transition-colors cursor-pointer">
+              <span>🔗 Share Guide</span>
+            </button>
+          </div>
+
+          <!-- Traveler Reviews & Tips Section -->
+          <div class="pt-6 border-t border-emeraldDeep/10">
+            <h3 class="font-editorial text-2xl font-bold text-emeraldDeep mb-1">Traveler Notes & Reviews</h3>
+            <p class="text-xs text-inkMuted mb-5">Notes are saved locally in your browser on this device.</p>
+
+            <form id="reviewForm" class="bg-white p-5 rounded-2xl border border-emeraldDeep/10 space-y-3.5 mb-6">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <input
+                  id="reviewer"
+                  maxlength="40"
+                  placeholder="Your name (e.g., Maya K.)"
+                  required
+                  class="w-full px-4 py-2.5 rounded-xl bg-sandIvory border border-emeraldDeep/15 text-sm focus:outline-none focus:ring-2 focus:ring-antiqueGold"
+                >
+                <select
+                  id="rating"
+                  aria-label="Rating"
+                  class="w-full px-4 py-2.5 rounded-xl bg-sandIvory border border-emeraldDeep/15 text-sm font-semibold text-emeraldDeep focus:outline-none focus:ring-2 focus:ring-antiqueGold cursor-pointer"
+                >
+                  <option value="5">★★★★★ — Unforgettable</option>
+                  <option value="4">★★★★☆ — Wonderful</option>
+                  <option value="3">★★★☆☆ — Worth Visiting</option>
+                  <option value="2">★★☆☆☆ — Fair</option>
+                  <option value="1">★☆☆☆☆ — Poor</option>
+                </select>
+              </div>
+              <textarea
+                id="reviewText"
+                maxlength="500"
+                rows="3"
+                placeholder="Share a helpful tip, best photo spot, or local recommendation..."
+                required
+                class="w-full px-4 py-2.5 rounded-xl bg-sandIvory border border-emeraldDeep/15 text-sm focus:outline-none focus:ring-2 focus:ring-antiqueGold"
+              ></textarea>
+              <button type="submit" class="px-6 py-2.5 rounded-full bg-antiqueGold hover:bg-antiqueGoldLight text-emeraldDeep font-bold text-xs sm:text-sm transition-colors cursor-pointer">
+                Post Traveler Note
+              </button>
+            </form>
+
+            <div id="reviewList" class="space-y-3"></div>
+          </div>
+        </div>
+      `;
+
+      // Load Up to 4 Wikimedia Photos into Hero + Gallery Grid
+      const mainImg = document.getElementById('modalMainPhoto');
+      const galleryImgs = document.querySelectorAll('#modalGalleryGrid img');
+      const galleryStatus = document.getElementById('galleryStatus');
+      mainImg.classList.add('loaded');
+
+      findPlacePhotos(name, 4).then(urls => {
+        if (urls && urls.length > 0) {
+          mainImg.src = urls[0];
+          galleryImgs.forEach((gImg, idx) => {
+            const targetUrl = urls[idx] || urls[0];
+            gImg.src = targetUrl;
+            gImg.classList.add('loaded');
+            gImg.classList.add('cursor-pointer', 'hover:opacity-90');
+            gImg.title = 'Click to view as main photo';
+            gImg.addEventListener('click', () => {
+              mainImg.src = targetUrl;
+            });
+          });
+          galleryStatus.textContent = `${urls.length} Wikimedia photo${urls.length === 1 ? '' : 's'}`;
+        } else {
+          galleryImgs.forEach(gImg => gImg.classList.add('loaded'));
+          galleryStatus.textContent = 'Wikimedia Commons';
+        }
+      });
+
+      // Modal Wishlist Toggle
+      document.getElementById('modalWishlistBtn').addEventListener('click', () => {
+        toggleWishlist(i);
+        const nowSaved = savedIndices.has(i);
+        document.getElementById('modalWishlistBtn').innerHTML = `<span>${nowSaved ? '❤️ Saved' : '🤍 Save to Trip'}</span>`;
+      });
+
+      // Share Button
+      document.getElementById('sharePlaceBtn').addEventListener('click', () => {
+        const shareText = `Discover ${name} (${cat}) in Sri Lanka — ${desc} ${mapUrl}`;
+        if (copyTextFallback(shareText)) {
+          showToast(`Copied "${name}" guide link!`, '🔗');
+        } else {
+          showToast('Unable to copy link in this browser', '⚠️');
+        }
+      });
+
+      // Reviews Handling
+      showReviews(name);
+      document.getElementById('reviewForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const reviews = getReviews(name);
+        reviews.unshift({
+          name: document.getElementById('reviewer').value.trim(),
+          rating: Number(document.getElementById('rating').value),
+          text: document.getElementById('reviewText').value.trim()
+        });
+        try {
+          localStorage.setItem('dsl_reviews_' + name, JSON.stringify(reviews.slice(0, 30)));
+          e.target.reset();
+          showReviews(name);
+          showToast('Thank you! Your traveler note was saved.', '⭐');
+        } catch (err) {
+          showToast('Could not save review in browser storage.', '⚠️');
+        }
+      });
+
+      placeDialog.showModal();
+    }
+
+    // Event Delegation for Card Open & Heart Clicks
+    cardsContainer.addEventListener('click', e => {
+      const heartBtn = e.target.closest('[data-heart-index]');
+      if (heartBtn) {
+        e.stopPropagation();
+        toggleWishlist(Number(heartBtn.dataset.heartIndex));
+        return;
+      }
+      const openBtn = e.target.closest('[data-open]');
+      if (openBtn) {
+        openPlace(Number(openBtn.dataset.open));
+      }
+    });
+
+    placeDialog.addEventListener('click', e => {
+      if (e.target === placeDialog) placeDialog.close();
+    });
+
+    // 7. Trip Planner / Wishlist Drawer Logic
+    function openWishlistModal() {
+      const body = document.getElementById('wishlistBody');
+      const footer = document.getElementById('wishlistFooter');
+
+      if (savedIndices.size === 0) {
+        body.innerHTML = `
+          <div class="text-center py-10">
+            <div class="text-5xl mb-4">🗺️</div>
+            <h3 class="font-editorial text-2xl font-bold text-emeraldDeep mb-2">Start Curating Your Journey</h3>
+            <p class="text-inkMuted text-sm max-w-sm mx-auto mb-6">
+              Browse the 51 destinations and click the heart icon (🤍) on places you wish to visit to build your custom Sri Lanka route.
+            </p>
+            <button type="button" onclick="wishlistDialog.close()" class="px-6 py-2.5 rounded-full bg-emeraldDeep text-sandIvory text-xs font-bold uppercase tracking-wider cursor-pointer">
+              Browse Destinations
+            </button>
+          </div>
+        `;
+        footer.classList.add('hidden');
+      } else {
+        footer.classList.remove('hidden');
+        const listItems = [...savedIndices].map((idx, step) => {
+          const [name, cat, desc] = places[idx];
+          const meta = categoryMeta[cat] || { icon: '📍' };
+          return `
+            <div class="bg-white rounded-2xl p-4 border border-emeraldDeep/10 flex items-center justify-between gap-4 shadow-sm">
+              <div class="flex items-center gap-3.5 min-w-0">
+                <span class="w-8 h-8 rounded-full bg-emeraldDeep text-antiqueGold font-bold text-xs flex items-center justify-center shrink-0">
+                  ${step + 1}
+                </span>
+                <div class="min-w-0">
+                  <div class="flex items-center gap-2">
+                    <h4 class="font-editorial text-lg font-bold text-emeraldDeep truncate">${name}</h4>
+                    <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-sandWarm text-emeraldDeep shrink-0">${meta.icon} ${cat}</span>
+                  </div>
+                  <p class="text-xs text-inkMuted truncate">${desc}</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <button type="button" data-plan-open="${idx}" class="px-3 py-1.5 rounded-full bg-sandWarm hover:bg-antiqueGold/30 text-emeraldDeep text-xs font-bold cursor-pointer">
+                  Guide
+                </button>
+                <button type="button" data-plan-remove="${idx}" aria-label="Remove ${name}" class="w-8 h-8 rounded-full hover:bg-rose-50 text-rose-600 flex items-center justify-center text-sm font-bold cursor-pointer">
+                  ✕
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        body.innerHTML = `<div class="space-y-3">${listItems}</div>`;
+      }
+
+      wishlistDialog.showModal();
+    }
+
+    document.getElementById('openWishlistBtn').addEventListener('click', openWishlistModal);
+    document.getElementById('footerWishlistBtn').addEventListener('click', openWishlistModal);
+
+    document.getElementById('wishlistBody').addEventListener('click', e => {
+      const removeBtn = e.target.closest('[data-plan-remove]');
+      if (removeBtn) {
+        const idx = Number(removeBtn.dataset.planRemove);
+        toggleWishlist(idx);
+        openWishlistModal();
+        return;
+      }
+      const openBtn = e.target.closest('[data-plan-open]');
+      if (openBtn) {
+        wishlistDialog.close();
+        openPlace(Number(openBtn.dataset.planOpen));
+      }
+    });
+
+    document.getElementById('copyItineraryBtn').addEventListener('click', () => {
+      if (savedIndices.size === 0) return;
+      const lines = ['🇱🇰 My Sri Lanka Travel Wishlist (Discover Sri Lanka):', ''];
+      [...savedIndices].forEach((idx, i) => {
+        const [name, cat] = places[idx];
+        lines.push(`${i + 1}. ${name} (${cat}) — https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name + ' Sri Lanka')}`);
+      });
+      if (copyTextFallback(lines.join('\n'))) {
+        showToast('Full itinerary copied to clipboard!', '📋');
+      }
+    });
+
+    document.getElementById('clearWishlistBtn').addEventListener('click', () => {
+      savedIndices.clear();
+      persistWishlist();
+      syncHeartButtons();
+      if (activeCategory === 'Saved') renderCards();
+      openWishlistModal();
+      showToast('Cleared saved trip wishlist', '🗑️');
+    });
+
+    wishlistDialog.addEventListener('click', e => {
+      if (e.target === wishlistDialog) wishlistDialog.close();
+    });
+
+    // 8. Smooth Scroll Progress Bar
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? Math.min(100, (scrollTop / docHeight) * 100) : 0;
+      document.getElementById('scrollProgress').style.width = pct + '%';
+    }, { passive: true });
+
+
+    // 9. New planning tools
+    const moneyLKR = value => 'LKR ' + Math.round(value).toLocaleString('en-LK');
+    function calculateTripBudget() {
+      const people = Math.max(1, Math.min(30, Number(document.getElementById('budgetPeople').value) || 1));
+      const days = Math.max(1, Math.min(60, Number(document.getElementById('budgetDays').value) || 1));
+      const daily = Math.max(0, Number(document.getElementById('budgetDaily').value) || 0);
+      const extra = Math.max(0, Number(document.getElementById('budgetExtra').value) || 0);
+      const total = people * days * daily + extra;
+      document.getElementById('budgetTotal').textContent = moneyLKR(total);
+      document.getElementById('budgetBreakdown').textContent = `${people} traveller${people===1?'':'s'} × ${days} day${days===1?'':'s'} × ${moneyLKR(daily)} per person/day + ${moneyLKR(extra)} extras`;
+    }
+    document.getElementById('calculateBudgetBtn').addEventListener('click', calculateTripBudget);
+    ['budgetPeople','budgetDays','budgetDaily','budgetExtra'].forEach(id => document.getElementById(id).addEventListener('change', calculateTripBudget));
+    document.getElementById('savedRouteMapBtn').addEventListener('click', () => {
+      if (!savedIndices.size) { showToast('Save a few destinations first to map your route.', '🗺️'); return; }
+      const names = [...savedIndices].map(idx => places[idx][0] + ', Sri Lanka');
+      const route = 'https://www.google.com/maps/dir/' + names.map(encodeURIComponent).join('/');
+      window.open(route, '_blank', 'noopener,noreferrer');
+    });
+    document.getElementById('printItineraryBtn').addEventListener('click', () => {
+      if (!savedIndices.size) { showToast('Save destinations before printing your itinerary.', 'ℹ️'); return; }
+      const items = [...savedIndices].map((idx, i) => {
+        const [name, cat, desc] = places[idx];
+        return `<li><strong>${escapeHtml(name)}</strong> <span>(${escapeHtml(cat)})</span><p>${escapeHtml(desc)}</p><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name+' Sri Lanka')}">Open map</a></li>`;
+      }).join('');
+      const win = window.open('', '_blank');
+      if (!win) { showToast('Allow pop-ups to print your itinerary.', '⚠️'); return; }
+      win.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>My Sri Lanka Itinerary</title><style>body{font:16px Arial,sans-serif;max-width:760px;margin:40px auto;padding:0 20px;color:#173b32}h1{font-family:Georgia,serif}li{padding:14px 0;border-bottom:1px solid #ddd}p{color:#52645f;margin:6px 0}a{color:#176c58}</style></head><body><h1>My Sri Lanka Itinerary</h1><p>Created with Discover Sri Lanka</p><ol>${items}</ol><script>window.onload=()=>window.print()<\/script></body></html>`);
+      win.document.close();
+    });
+
+    // Initialize App
+    initHeroSlideshow();
+    populateCategoryCounts();
+    updateWishlistUI();
+    renderCards();
+  </script>
+</body>
+</html>
